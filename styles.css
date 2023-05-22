@@ -1,0 +1,39 @@
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
+  background: hsla(0, 0%, 0%, 0.507);
+  padding: 1em;
+}
+.container .screen {
+  width: 95%;
+  height: 200px;
+  margin: 0.5em auto;
+  background-color: hsla(0, 0%, 0%, 0.856);
+}
+.container .main-btns {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1em 0;
+}
+.container .main-btns button {
+  width: 150px;
+  height: 50px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.container .operation-btns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  height: 400px;
+}
+.container .operation-btns button {
+  font-size: 3rem;
+}/*# sourceMappingURL=styles.css.map */
