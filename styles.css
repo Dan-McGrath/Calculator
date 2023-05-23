@@ -12,6 +12,10 @@ body {
   padding: 1em;
 }
 .container .screen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
   width: 95%;
   height: 200px;
   margin: 0.5em auto;
@@ -36,4 +40,20 @@ body {
 }
 .container .operation-btns button {
   font-size: 3rem;
+}
+
+.screen > p {
+  color: palegreen;
+  text-align: right;
+  padding-right: 1rem;
+  margin: 0;
+}
+
+.operation {
+  font-size: 1.7rem;
+  word-spacing: 5px;
+}
+
+.current {
+  font-size: 3.8rem;
 }/*# sourceMappingURL=styles.css.map */
