@@ -1,6 +1,7 @@
 
 
 const add = (num1, num2) => {
+    
     return num1 + num2
 }
 
@@ -26,17 +27,31 @@ const divide = (num1, num2) => {
 const current = document.querySelector('.current');
 const expression = document.querySelector('.expression');
 let operator;
+let digit;
+let secondDigit;
 
 const getOperator = (e) => {
+    if(operator !== undefined) {
+        digit = parseInt(current.textContent); 
+    }
+    
     operator = e.target.dataset.operation;
     expression.textContent = `${current.textContent} ${operator}`;
     return operator
 }
 
 const getNumber = (e) => {
-    num = e.target.dataset.number;
-    current.textContent = num
-    return num
+    if (operator === undefined) {
+        digit = parseInt(e.target.dataset.number);
+        current.textContent = digit;
+    } else if (secondDigit == undefined) {
+        secondDigit = parseInt(e.target.dataset.number);
+        operate(digit, operator, secondDigit)
+    } else {
+        digit = parseInt(e.target.dataset.number);
+        operate(digit, operator, secondDigit)
+    }
+
 }
 
 
@@ -44,19 +59,25 @@ const getNumber = (e) => {
 
 
 
-// const operate = (num1, operator, num2) => {
-//     if (operator.dataset.operation === 'add') {
-//         return add(num1, num2);
-//     } else if(operator.dataset.operation === 'subtract') {
-//        return subtract(num1, num2);
-//     } else if(operator.dataset.operation === 'multiply') {
-//         return multiply(num1, num2);
-//     } else if(operator.dataset.operation === 'divide') {
-//         return divide(num1, num2);
-//     } else if(operator.dataset.operation === 'equal') {
-//         return num1
-//     }
-// }
+const operate = (num1, operator, num2) => {
+    if (operator === '+') {
+        current.textContent = add(num1, num2);
+        secondDigit = undefined;
+    } else if(operator === '-') {
+        current.textContent = subtract(num1, num2);
+        secondDigit = undefined;
+    } else if(operator === 'x') {
+        current.textContent = multiply(num1, num2);
+        secondDigit = undefined;
+    } else if(operator === '/') {
+        current.textContent = divide(num1, num2);
+        secondDigit = undefined;
+    } else if(operator === '=') {
+        return num1
+    }
+}
+
+
 
 
 
@@ -74,5 +95,6 @@ const addClickNumber = () => {
         number[i].addEventListener('click', getNumber)
     }
 }
+
 addClickNumber();
 addClickOperator();
