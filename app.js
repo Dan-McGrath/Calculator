@@ -48,9 +48,10 @@ const getNumber = (e) => {
         current.textContent = digit;
     } else if (secondDigit === undefined) {
         secondDigit = e.target.dataset.number
+        current.textContent = secondDigit;
     } else {
         secondDigit = secondDigit + e.target.dataset.number;
-        
+        current.textContent = secondDigit;
     }
 
 }
@@ -91,6 +92,8 @@ const addClickNumber = () => {
         number[i].addEventListener('click', getNumber)
     }
 }
+
+
 
 addClickNumber();
 addClickOperator();
