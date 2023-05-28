@@ -28,6 +28,7 @@ const expression = document.querySelector('.expression');
 let operator;
 let digit;
 let secondDigit;
+let value;
 
 const getOperator = (e) => {
     if(operator !== undefined && secondDigit !== undefined) {
@@ -42,16 +43,20 @@ const getOperator = (e) => {
 const getNumber = (e) => {
     if (operator === undefined && digit === undefined) {
         digit = e.target.dataset.number;
-        current.textContent = digit;
+        value = e.target.dataset.number;
+        current.textContent = value;
     } else if (digit !== undefined && operator === undefined) {
         digit = digit + e.target.dataset.number;
-        current.textContent = digit;
+        value = digit
+        current.textContent = value;
     } else if (secondDigit === undefined) {
-        secondDigit = e.target.dataset.number
-        current.textContent = secondDigit;
+        secondDigit = e.target.dataset.number;
+        value = e.target.dataset.number;
+        current.textContent = value;
     } else {
         secondDigit = secondDigit + e.target.dataset.number;
-        current.textContent = secondDigit;
+        value = secondDigit
+        current.textContent = value;
     }
 
 }
@@ -60,23 +65,40 @@ const getNumber = (e) => {
 const operate = (num1, operator, num2) => {
     num1 = parseInt(num1);
     num2 = parseInt(num2);
-    if (operator === 'add') {
-        current.textContent = add(num1, num2);
+    if (operator === '+') {
+        value = add(num1, num2);
+        current.textContent = value;        
         secondDigit = undefined;
-    } else if(operator === 'subtract') {
-        current.textContent = subtract(num1, num2);
+    } else if(operator === '-') {
+        value = subtract(num1, num2);
+        current.textContent = value;
         secondDigit = undefined;
-    } else if(operator === 'multiply') {
-        current.textContent = multiply(num1, num2);
+    } else if(operator === 'x') {        
+        value = multiply(num1, num2);
+        current.textContent = value;
         secondDigit = undefined;
-    } else if(operator === 'divide') {
-        current.textContent = divide(num1, num2);
+    } else if(operator === '/') {
+        value = divide(num1, num2);
+        current.textContent = value
         secondDigit = undefined;
-    } else if(operator === 'equals') {
-        return num1
+    } 
+}
+
+//Equal
+
+const evaluate = () => {
+    if(operator !== undefined && secondDigit !== undefined) {
+        expression.textContent = `${digit} ${operator} ${secondDigit} =`
+        operate(digit, operator, secondDigit);
+    } else {
+        return
     }
 }
 
+const equalBtn = document.querySelector('.equals');
+equalBtn.addEventListener('click', evaluate);
+
+//event listeners for main btns
 
 const number = document.querySelectorAll('.number');
 const operation = document.querySelectorAll('.operation');
@@ -93,7 +115,35 @@ const addClickNumber = () => {
     }
 }
 
+//Clear
 
+const clearBttn = document.querySelector('.clear')
+
+const clear = () => {
+    digit = undefined;
+    secondDigit = undefined;
+    operator = undefined;
+    current.textContent = 0;
+    expression.textContent = '';
+}
+
+clearBttn.addEventListener('click', clear);
+
+
+//Back
+const back = () => {
+    newValue = value.slice(0,-1);
+    value = newValue
+    current.textContent = value;
+    if (operator === undefined) {
+        digit = newValue;
+    } else {
+        secondDigit = newValue;
+    }
+}
+
+const backBtn = document.querySelector('.back');
+backBtn.addEventListener('click', back)
 
 addClickNumber();
-addClickOperator();
+addClickOperator(); 
