@@ -40,7 +40,7 @@ const divide = (num1, num2) => {
     if(num1 % num2 === 0) {
         return answer
     }
-    return answer.toFixed(5);
+    return +answer.toFixed(5);
     
 }
 const current = document.querySelector('.current');
