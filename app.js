@@ -3,7 +3,7 @@
 const add = (num1, num2) => {
     let answer = (num1 + num2);
     if (num1 % 1 === 0 || num2 % 1 === 0) {
-        answer = +(num1 * num2).toFixed(5)
+        answer = +(num1 + num2).toFixed(5)
         return answer;
     }
     
@@ -13,7 +13,7 @@ const add = (num1, num2) => {
 const subtract = (num1, num2) => {
     let answer = (num1 - num2);
     if (num1 % 1 === 0 || num2 % 1 === 0) {
-        answer = +(num1 * num2).toFixed(5)
+        answer = +(num1 - num2).toFixed(5)
         return answer;
     }
     return answer
