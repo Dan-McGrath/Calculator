@@ -1,22 +1,42 @@
 
 
 const add = (num1, num2) => {
-    return (num1 + num2)
+    let answer = (num1 + num2);
+    if (num1 % 1 === 0 || num2 % 1 === 0) {
+        answer = +(num1 * num2).toFixed(5)
+        return answer;
+    }
+    
+    return answer
 }
 
 const subtract = (num1, num2) => {
-    return num1 - num2
+    let answer = (num1 - num2);
+    if (num1 % 1 === 0 || num2 % 1 === 0) {
+        answer = +(num1 * num2).toFixed(5)
+        return answer;
+    }
+    return answer
+ 
 }
 
 const multiply = (num1, num2) => {
-    return num1 * num2
+    let answer;
+    if (num1 % 1 === 0 || num2 % 1 === 0) {
+        answer = +(num1 * num2).toFixed(5)
+        return answer;
+    }
+    
+    return answer
+    
+
 }
 
 const divide = (num1, num2) => {
     if (num2 === 0) {
         alert('Cannot divide by 0')
     }
-    answer = (num1 / num2);
+    let answer = (num1 / num2);
     if(num1 % num2 === 0) {
         return answer
     }
@@ -38,6 +58,7 @@ const getOperator = (e) => {
     operator = e.target.dataset.operation;
     symbol = e.target.textContent
     expression.textContent = `${current.textContent} ${symbol}`;
+    float.dataset.active = 'false'
 }
 
 const getNumber = (e) => {
@@ -49,11 +70,11 @@ const getNumber = (e) => {
         digit = digit + e.target.dataset.number;
         value = digit
         current.textContent = value;
-    } else if (secondDigit === undefined) {
+    } else if (secondDigit === undefined && operator !== undefined) {
         secondDigit = e.target.dataset.number;
         value = e.target.dataset.number;
         current.textContent = value;
-    } else {
+    } else if (secondDigit !== undefined && operator !== undefined) {
         secondDigit = secondDigit + e.target.dataset.number;
         value = secondDigit
         current.textContent = value;
@@ -63,24 +84,34 @@ const getNumber = (e) => {
 
 
 const operate = (num1, operator, num2) => {
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
+    if (num1 % 1 === 0 && num2 % 1 === 0){
+        num1 = parseInt(num1);
+        num2 = parseInt(num2);
+    } else {
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+    }
+    
     if (operator === '+') {
         value = add(num1, num2);
         current.textContent = value;        
         secondDigit = undefined;
+        float.dataset.active = 'false'
     } else if(operator === '-') {
         value = subtract(num1, num2);
         current.textContent = value;
         secondDigit = undefined;
+        float.dataset.active = 'false'
     } else if(operator === 'x') {        
         value = multiply(num1, num2);
         current.textContent = value;
         secondDigit = undefined;
+        float.dataset.active = 'false'
     } else if(operator === '/') {
         value = divide(num1, num2);
         current.textContent = value
         secondDigit = undefined;
+        float.dataset.active = 'false'
     } 
 }
 
@@ -125,6 +156,7 @@ const clear = () => {
     operator = undefined;
     current.textContent = 0;
     expression.textContent = '';
+    float.dataset.active = 'false'
 }
 
 clearBttn.addEventListener('click', clear);
@@ -132,18 +164,45 @@ clearBttn.addEventListener('click', clear);
 
 //Back
 const back = () => {
+    lastChar = value.slice(-1);
     newValue = value.slice(0,-1);
-    value = newValue
+    if (lastChar === '.') {
+        float.dataset.active = 'false'
+    }
+    value = newValue;
     current.textContent = value;
+    if (operator !== undefined && digit !== undefined && secondDigit === undefined) {
+        return
+    }
     if (operator === undefined) {
         digit = newValue;
     } else {
         secondDigit = newValue;
     }
+    
 }
 
 const backBtn = document.querySelector('.back');
 backBtn.addEventListener('click', back)
+
+// Decimal
+const float = document.querySelector('.float')
+
+
+const addFloat = (e) => {
+    if (e.target.dataset.active === 'false') {
+        current.textContent += '.'
+        if (operator === undefined) {
+            digit += '.'
+        } else {
+            secondDigit += '.'
+        }
+    }
+    
+    e.target.dataset.active='true';
+}
+
+float.addEventListener('click', addFloat)
 
 addClickNumber();
 addClickOperator(); 
