@@ -2,8 +2,8 @@
 
 const add = (num1, num2) => {
     let answer = (num1 + num2);
-    if (num1 % 1 === 0 || num2 % 1 === 0) {
-        answer = +(num1 + num2).toFixed(5)
+    if (answer % 1 === 0) {
+        answer = +answer.toFixed(5)
         return answer;
     }
     
@@ -12,8 +12,8 @@ const add = (num1, num2) => {
 
 const subtract = (num1, num2) => {
     let answer = (num1 - num2);
-    if (num1 % 1 === 0 || num2 % 1 === 0) {
-        answer = +(num1 - num2).toFixed(5)
+    if (answer % 1 === 0) {
+        answer = +answer.toFixed(5)
         return answer;
     }
     return answer
@@ -21,9 +21,9 @@ const subtract = (num1, num2) => {
 }
 
 const multiply = (num1, num2) => {
-    let answer;
-    if (num1 % 1 === 0 || num2 % 1 === 0) {
-        answer = +(num1 * num2).toFixed(5)
+    let answer = (num1 * num2);
+    if (answer % 1 === 0) {
+        answer = +answer.toFixed(5)
         return answer;
     }
     
@@ -192,9 +192,13 @@ const float = document.querySelector('.float')
 const addFloat = (e) => {
     if (e.target.dataset.active === 'false') {
         current.textContent += '.'
-        if (operator === undefined) {
+        if (operator === undefined && digit === undefined) {
+            digit = '0.'
+        } else if (operator === undefined && digit !== undefined) {
             digit += '.'
-        } else {
+        } else if (operator !== undefined && secondDigit === undefined) {
+            secondDigit = '0.'
+        } else if (operator !== undefined && secondDigit !== undefined) {
             secondDigit += '.'
         }
     }
